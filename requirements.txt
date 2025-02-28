@@ -1,0 +1,4 @@
+paho-mqtt==2.1.0
+pymongo==4.11.1
+numpy
+python-dotenv==1.0.1

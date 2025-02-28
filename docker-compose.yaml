@@ -1,0 +1,46 @@
+
+services:
+
+
+  mqtt_simulator:
+    build: .
+    container_name: mqtt_simulator
+    depends_on:
+      - mongo
+      - mqtt-broker
+    environment:
+      - MQTT_BROKER=${MQTT_CONTAINER_NAME}
+      - MQTT_PORT=1883
+      - MONGO_URI=mongodb://${MONGODB_USER}:${MONGODB_PASS}@${MONGODB_CONTAINER_NAME}:27017/
+      - MONGODB_DBNAME=${MONGODB_DBNAME}
+    volumes:
+      - .:/app
+
+
+
+  mongo:
+    image: mongodb/mongodb-community-server:latest
+    container_name: ${MONGODB_CONTAINER_NAME}
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      # MongoDB environment variables to set up the root user
+      - MONGODB_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_PASS}
+      - MONGO_INITDB_DATABASE=${MONGODB_DBNAME}   
+
+
+  mqtt-broker:
+    image: eclipse-mosquitto
+    container_name: ${MQTT_CONTAINER_NAME}
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+
+volumes:
+  mongodb_data:
+
