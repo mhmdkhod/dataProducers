@@ -11,6 +11,19 @@ This repository provides a dockerized service for producing sample MQTT data, pu
 - The data is saved in a MongoDB database.
 - People come and leave. As long as they are in the simulation and their location is updated, their data is stored in a collection called `active_people`.
 - As soon as they leave, their data is transferred.
+  ** To view the data with UI MongoDB Compass would help **
 
 #### mqtt_container
 - This serves as the MQTT broker.
+
+
+
+
+### How to use: 
+- clone the repository.
+- your docker daemon must be runnning obviously
+- run docker compose up --build in terminal.
+- your data must be published thorugh port 1883 and saved into MongoDB 
+
+
+
